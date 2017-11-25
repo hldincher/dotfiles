@@ -1,0 +1,227 @@
+[colors]
+foreground = #efefef
+background = #1d1d1d
+modb       = #1d1d1d
+modb1      = #1d1d1d
+modb2      = #1d1d1d
+
+red    = #F07178
+green  = #C3E88D
+yellow = #FFCB6B
+blue   = #89DDFF
+violet = #C792EA
+cyan   = #82AAFF
+white  = #c6c8d1
+
+[global/wm]
+margin-top        = 0
+margin-bottom     = 0
+override-redirect = true
+
+
+
+[bar/top]
+width    = 100%
+height   = 28h
+offset-x = 0
+offset-y = 0
+
+locale     = de_DE.UTF-8
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+font-0 = Inconsolata:size=8:antialias=true;-1
+font-1 = Wuncon Siji:size=9:;-1
+font-2 = FontAwesome:pixelsize=11;0
+
+modules-left   = xwindow
+modules-center = i3
+modules-right  = mail volume backlight cpu date1 powermenu
+
+tray-position    = off
+tray-padding     = 2
+
+tray-transparent = false
+tray-detached    = false
+tray-background  = ${colors.modb}
+
+spacing             = 1
+padding-left        = 0
+padding-right       = 0
+module-margin-left  = 0
+module-margin-right = 0
+
+;#############
+; CLOCK / DATE
+;#############
+
+[module/date1]
+type                     = internal/date
+interval                 = 1
+date                     = " %I:%M"
+format-prefix            = CLOCK 
+format-prefix-foreground = ${colors.cyan}
+format-background        = ${colors.modb}
+format-padding           = 2
+
+;#############
+; POWER MENU
+;#############
+
+[module/powermenu]
+type = custom/menu
+
+label-open                 = Power
+label-open-foreground      = ${colors.red}
+label-open-background      = ${colors.modb2}
+label-open-padding         = 2
+label-close                = ✕
+label-close-padding        = 2
+label-close-foreground     = $[colors.red]
+label-separator            = |
+label-separator-foreground = #666666
+
+menu-0-0      = Reboot
+menu-0-0-exec = menu-open-1
+menu-0-1      = Shutdown
+menu-0-1-exec = menu-open-2
+menu-0-2      = Lock
+menu-0-2-exec = menu-open-3
+
+menu-1-0      = ✕
+menu-1-0-exec = menu-open-0
+menu-1-1      = ✓
+menu-1-1-exec = i3exit reboot
+
+menu-2-0      = ✓
+menu-2-0-exec = i3exit poweroff
+menu-2-1      = ✕
+menu-2-1-exec = menu-open-0
+
+menu-3-0      = ✓
+menu-3-0-exec = i3exit lock
+menu-3-1      = ✕
+menu-3-1-exec = menu-open-0
+
+;#############
+; XWINDOW
+;#############
+
+[module/xwindow]
+format-prefix            = " WINDOW "
+format-prefix-foreground = ${colors.blue}
+type = internal/xwindow
+label = %title:0:30:...%
+
+;#############
+; WORKSPACE
+;#############
+
+[module/i3]
+pin-workspaces = true
+type = internal/i3
+format = <label-mode> <label-state>
+index-sort = true
+strip-wsnumbers = true
+
+label-focused-font = 4
+label-unfocused-font = 4
+label-urgent-font = 4
+label-visible-font = 4 
+
+label-focused = %index%
+;label-focused-background = ${colors.red}
+label-focused-foreground = ${colors.red}
+label-focused-padding = 1
+
+label-unfocused = %index%
+label-unfocused-padding = 1
+;label-unfocused-background = ${colors.black}
+label-unfocused-foreground = ${colors.white}
+label-unfocused-underlinde = ${colors.white}
+
+label-urgent = %index%!
+;label-urgent-background = ${colors.white}
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.white}
+
+label-visible = %index%
+label-visible-foreground = ${colors.white}
+label-visible-padding = 1
+
+label-invisible = %index%
+label-invisible-foreground = ${colors.white}
+label-invisible-padding = 1
+
+;#############
+; CPU
+;#############
+
+[module/cpu]
+type                     = internal/cpu
+label                    = %percentage-core1%%
+format-prefix            = "CPU "
+format-prefix-foreground = ${colors.green}
+format-background        = ${colors.modb}
+format-padding           = 2
+
+;#############
+; WEATHER
+;#############
+
+[module/weather]
+type                     = custom/script
+interval                 = 10
+format                   = <label>
+format-padding           = 2
+format-prefix            = "Weather "
+format-suffix            = "°C"
+format-prefix-foreground = ${colors.blue}
+format-background        = ${colors.modb}
+exec                     = python2.7 ~/scripts/weather.py
+
+;#############
+; VOLUME
+;#############
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume><label-volume>
+
+format-volume-background = ${colors.modb}
+format-volume-padding    = 2
+
+module-margin-right = 0
+ramp-volume-0       = VOL
+ramp-volume-1       = VOL
+ramp-volume-2       = VOL
+
+ramp-volume-foreground = ${colors.green}
+
+label-muted-padding    = 2
+label-muted            =  muted
+label-muted-background = ${colors.modb}
+
+;#############
+; BACKLIGHT
+;#############
+
+[module/backlight]
+
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+format-prefix            = "LIGHT "
+format-prefix-foreground = ${colors.yellow}
+
+card = nv_backlight
+
+;enable-scroll = true
+;scroll-up = "light -A 5"
+;scroll-down = "light -U 5"
+
+click-left = light -A 5
+click-right = light -U 5
+
