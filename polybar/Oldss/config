@@ -1,0 +1,182 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[colors]
+background = ${xrdb:background}
+background-alt = #382f2a
+foreground = ${xrdb:foreground}
+foreground-alt = ${xrdb:color15}
+active = #4c7a9a
+inactive = #2b4557
+
+[bar/wpgtk]
+;monitor = ${env:MONITOR}
+width = 100%
+height = 23
+offset-y = 0%
+radius = 0.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 0
+label-line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = menlo:fontformat=truetype:size=8:antialias=true;2
+font-1 = FontAwesome:style=Regular:size=10:antialias=false;2
+
+modules-left = ewmh
+modules-center = date
+modules-right = 
+
+tray-position = right
+tray-padding = 0
+tray-background = ${colors.background}
+
+[module/xwindow]
+type = internal/xwindow
+format-background = ${colors.active}
+format-foreground = ${colors.foreground}
+format-padding = 2
+label = %title:0:30:...%
+
+[module/i3]
+type = internal/i3
+format = <label-mode><label-state>
+index-sort = true
+wrapping-scroll = false
+fuzzy-matching = true
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+;ws-icon-0 = o;
+;ws-icon-1 = o;
+;ws-icon-2 = o;
+;ws-icon-3 = o;
+;ws-icon-4 = o;
+;ws-icon-5 = o;
+;ws-icon-6 = o;
+;ws-icon-7 = o;
+;ws-icon-default = 
+
+label-mode-padding = 1
+label-mode-foreground = ${colors.foreground}
+label-mode-background = ${colors.background}
+
+; focused = Active workspace on focused monitor
+; label-focused = %index%
+label-focused-background = ${colors.foreground-alt}
+label-focused-padding = 1
+
+; unfocused = Inactive workspace on any monitor
+; label-unfocused = %index%
+label-unfocused-padding = 1
+label-unfocused-background = ${colors.background}
+
+; visible = Active workspace on unfocused monitor
+; label-visible = %index%
+label-visible-background = ${colors.background}
+label-visible-padding = 1
+
+; urgent = Workspace with urgency hint set
+; label-urgent = %index%
+label-urgent-background = ${colors.background}
+label-urgent-padding = 1
+
+
+
+
+
+[module/wlan]
+type = internal/network
+interface = wlp8s0
+interval = 3.0
+
+format-connected-padding = 2
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+format-connected-background = ${colors.active}
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/ewmh]
+type = internal/xworkspaces
+enable-scroll = true
+format-padding = 2
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+label-active = "  "
+label-occupied = "  "
+label-urgent = "  "
+label-empty = "  "
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d/%m/%Y"
+
+time = %I:%M 
+time-alt = %I:%M %p
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground}
+format-padding = 2
+format-background = ${colors.background}
+
+label = %date% %time%
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+format-background = ${colors.background}
+format-padding = 1
+
+label-open = 
+label-open-foreground = ${colors.foreground-alt}
+label-close =  cancel
+label-close-foreground = ${colors.inactive}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = reboot
+
+menu-2-0 = power off
+menu-2-0-exec = poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+format-prefix-font = 2
+
+
